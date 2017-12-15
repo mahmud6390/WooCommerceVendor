@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.mykaribe.vendor.view.CircleImageView
+        android:id="@+id/custom_profile_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/profile_image"
+        app:border_color="@android:color/background_dark"
+        app:border_width="0.1dp"
+        />
+
+    <TextView
+        android:id="@+id/custom_profile_image_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#000000"
+        android:textSize="14sp" />
+</RelativeLayout>

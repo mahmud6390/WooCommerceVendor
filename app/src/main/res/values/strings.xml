@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">My Karibe Vendor</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="order_list">All orders</string>
+    <string name="no_order_available">No order available</string>
+    <string name="no_data_found"><![CDATA[No %1$s found for<font color=#232323>&#160;%2$s</font>]]></string>
+    <string name="oder_name"><![CDATA[<b> %1$s </b> by <font color=#84cff9>%2$s</font> </br> <font color=#84cff9>%3$s</font>]]></string>
+    <string name="ship_to"><![CDATA[<font color=#84cff9>%1$s</font> <font color=#ffc8c8c8></br>Via %2$s</font>]]></string>
+    <string name="total"><![CDATA[<font color=#84cff9>%1$s</font>  <font color=#ffc8c8c8></br>Via %2$s</font>]]></string>
+</resources>
