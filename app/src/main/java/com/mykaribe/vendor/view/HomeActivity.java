@@ -1,17 +1,18 @@
-package com.mykaribe.vendor;
+package com.mykaribe.vendor.view;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,21 +22,14 @@ import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
 import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.mykaribe.vendor.R;
 import com.mykaribe.vendor.communication.PushListenerService;
-import com.mykaribe.vendor.controller.OrderGetController;
-import com.mykaribe.vendor.listener.IOrderListUiCallback;
-import com.mykaribe.vendor.model.Order;
 import com.mykaribe.vendor.utils.Constant;
 import com.mykaribe.vendor.utils.Logger;
-import com.mykaribe.vendor.view.BarcodeScannerActivity;
-import com.mykaribe.vendor.view.OrderListFragment;
 
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
 
 
-    private OrderListFragment orderListFragment;
     private Toolbar toolbar;
 
     @Override
@@ -43,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar= (Toolbar) findViewById(R.id.toolbar);
-        ((FloatingActionButton) findViewById(R.id.fab)).setOnClickListener(this);
+        ((FloatingActionButton) findViewById(R.id.fab)).setVisibility(View.GONE);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -58,11 +52,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        name=(TextView)navigationView.findViewById(R.id.profile_name) ;
 //
 //        profileImageView.setOnClickListener(this);
-        orderListFragment=new OrderListFragment();
-        toolbar.setTitle(R.string.order_list);
-        getFragmentManager().beginTransaction().replace(R.id.content_view,orderListFragment).commit();
+
+
+        setHomePageFragment();
         setUpAmazonService();
 
+    }
+    public void setOrderListFragment(){
+        toolbar.setTitle(R.string.order_list);
+        getFragmentManager().beginTransaction().replace(R.id.content_view,new OrderListFragment()).commit();
+    }
+    public void setHomePageFragment(){
+        toolbar.setTitle(R.string.home_page);
+        getFragmentManager().beginTransaction().replace(R.id.content_view,new HomeFragment()).commit();
     }
     public static PinpointManager pinpointManager;
     private void setUpAmazonService(){
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void run() {
                     try {
                         String deviceToken =
-                                InstanceID.getInstance(MainActivity.this).getToken(
+                                InstanceID.getInstance(HomeActivity.this).getToken(
                                         Constant.FIREBASE_SENDER_ID,
                                         GoogleCloudMessaging.INSTANCE_ID_SCOPE);
                         Logger.debugLog("DEVICE_TOKEN","device token:"+ deviceToken);
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Bundle data = intent.getBundleExtra(PushListenerService.INTENT_SNS_NOTIFICATION_DATA);
             String message = PushListenerService.getMessage(data);
 
-            new AlertDialog.Builder(MainActivity.this)
+            new AlertDialog.Builder(HomeActivity.this)
                     .setTitle("Push notification")
                     .setMessage(message)
                     .setPositiveButton(android.R.string.ok, null)
@@ -130,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fab:
-                startActivity(new Intent(MainActivity.this, BarcodeScannerActivity.class));
+                startActivity(new Intent(HomeActivity.this, BarcodeScannerActivity.class));
                 break;
         }
 
@@ -138,6 +140,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        return false;
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        switch (id){
+            case R.id.home:
+                setHomePageFragment();
+                break;
+            case R.id.scan_barcode:
+                startActivity(new Intent(this, BarcodeScannerActivity.class));
+                break;
+            case  R.id.order_list:
+                setOrderListFragment();
+                break;
+            case R.id.logout:
+
+                break;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

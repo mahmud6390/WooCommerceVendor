@@ -28,15 +28,15 @@ public class ResponseModel {
     private String url;
     private IServerRequestCallback listener;
 
-    public JSONArray getJsonArray() {
-        return jsonArray;
+    public String getResponse() {
+        return response;
     }
 
-    public void setJsonObject(JSONArray jsonArray) {
-        this.jsonArray = jsonArray;
+    public void setResponse(String response) {
+        this.response = response;
     }
 
-    private JSONArray jsonArray;
+    private String response;
 
     public int getOrderType() {
         return orderType;

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/search_bar"
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/red"
+        android:padding="10dp"
         android:text="0 item"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -96,14 +96,33 @@
         style="@style/Widget.AppCompat.ProgressBar"
         android:visibility="gone"
         />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_view_order"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_order"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/text_view_total_record"
-        android:clipToPadding="false"
-        android:divider="@android:color/background_light"
-        android:dividerHeight="2dp"
-        android:scrollbars="none"
-        android:visibility="visible" />
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view_order"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/text_view_total_record"
+            android:clipToPadding="false"
+            android:background="@color/white"
+            android:divider="@android:color/background_light"
+            android:dividerHeight="2dp"
+            android:scrollbars="none"
+            android:visibility="gone" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/login_btn"
+        app:borderWidth="0dp"
+        app:elevation="0dp"
+        android:src="@drawable/camera_h"
+         />
 </RelativeLayout>

@@ -7,6 +7,6 @@ import org.json.JSONObject;
  * Created by USER on 15/12/2017.
  */
 public interface IServerRequestCallback {
-   void onRequestSuccess(JSONArray serverResponse, int orderType);
+   void onRequestSuccess(String response, int orderType);
     void onRequestFail(String cause,int orderType);
 }

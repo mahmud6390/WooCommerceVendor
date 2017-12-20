@@ -3,7 +3,29 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/home"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="Home" />
+        <item
+            android:id="@+id/scan_barcode"
+            android:icon="@android:drawable/ic_menu_camera"
+            android:title="Scan Barcode" />
+        <item
+            android:id="@+id/order_list"
+            android:icon="@android:drawable/ic_menu_directions"
+            android:title="Order List" />
+        <item
+            android:id="@+id/d"
+            android:title="" />
+        <item
+            android:id="@+id/e"
+            android:title="" />
+        <item
+            android:id="@+id/f"
+            android:title="" />
+        <item
             android:id="@+id/logout"
+            android:icon="@android:drawable/ic_dialog_alert"
             android:title="Logout" />
 
     </group>

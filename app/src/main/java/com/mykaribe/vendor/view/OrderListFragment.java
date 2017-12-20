@@ -1,8 +1,11 @@
 package com.mykaribe.vendor.view;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,12 +24,14 @@ import java.util.List;
 /**
  * Created by USER on 16/12/2017.
  */
-public class OrderListFragment extends Fragment {
+public class OrderListFragment extends Fragment implements View.OnClickListener{
     private TextView textViewNoOrder,textViewTotalRecord;
     private ProgressBar progressBar;
     private RecyclerView recyclerViewOrder;
     private OrderListRecyclerViewAdapter adapter;
     private OrderGetController orderGetController;
+    private FloatingActionButton floatingActionButton;
+    private SwipeRefreshLayout swipeRefreshLayoutOrder;
 
     @Nullable
     @Override
@@ -36,6 +41,21 @@ public class OrderListFragment extends Fragment {
         textViewTotalRecord=(TextView)view.findViewById(R.id.text_view_total_record);
         recyclerViewOrder=(RecyclerView)view.findViewById(R.id.recycle_view_order);
         progressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
+        floatingActionButton=(FloatingActionButton)view.findViewById(R.id.fab);
+        swipeRefreshLayoutOrder=(SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_order);
+        swipeRefreshLayoutOrder.setColorSchemeResources(
+                R.color.colorAccent,
+                R.color.colorAccent,
+                R.color.colorAccent);
+        swipeRefreshLayoutOrder.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                    loadOrder();
+                    swipeRefreshLayoutOrder.setRefreshing(false);
+
+            }
+        });
+        floatingActionButton.setOnClickListener(this);
         recyclerViewOrder.setLayoutManager(new LinearLayoutManager(getActivity()));
         return view;
     }
@@ -43,6 +63,10 @@ public class OrderListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        loadOrder();
+    }
+    private void loadOrder(){
+
         orderGetController=new OrderGetController();
         progressBar.setVisibility(View.VISIBLE);
         orderGetController.getOrderList(new IOrderListUiCallback() {
@@ -50,6 +74,11 @@ public class OrderListFragment extends Fragment {
             public void onOrderListUpdate(List<Order> orders) {
                 progressBar.setVisibility(View.GONE);
                 notifyAdapter(orders);
+            }
+
+            @Override
+            public void onOrderUpdate(Order order) {
+
             }
         });
     }
@@ -72,5 +101,14 @@ public class OrderListFragment extends Fragment {
             recyclerViewOrder.setVisibility(View.GONE);
         }
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.fab:
+                startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
+                break;
+        }
     }
 }

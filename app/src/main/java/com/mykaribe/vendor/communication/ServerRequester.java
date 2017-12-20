@@ -3,7 +3,7 @@ package com.mykaribe.vendor.communication;
 import android.annotation.TargetApi;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.util.Base64;
+import android.text.TextUtils;
 
 import com.mykaribe.vendor.model.RequestModel;
 import com.mykaribe.vendor.model.ResponseModel;
@@ -20,6 +20,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -56,7 +57,6 @@ public class ServerRequester {
 
 
 
-    @TargetApi(Build.VERSION_CODES.CUPCAKE)
     private class AsyncServerRequest extends AsyncTask<Void, Void, ResponseModel>{
 
         @Override
@@ -66,18 +66,25 @@ public class ServerRequester {
             Logger.debugLog(TAG,"doInBackground>>>url:"+url);
             ResponseModel response =null;
             try {
-                JSONArray jsonObject=new JSONArray(sendHttpReq(url,requestModel.getMethodType()));
-                response=new ResponseModel();
-                response.setJsonObject(jsonObject);
-                response.setListener(requestModel.getListener());
-                response.setUrl(url);
-                response.setOrderType(requestModel.getOrderType());
+                String res=sendHttpReq(url,requestModel.getMethodType());
+                if(!TextUtils.isEmpty(res)){
+                    response=new ResponseModel();
+                    response.setResponse(res);
+                    response.setListener(requestModel.getListener());
+                    response.setUrl(url);
+                    response.setOrderType(requestModel.getOrderType());
+                }else{
+                    response=new ResponseModel();
+                    response.setUrl(url);
+                    response.setListener(requestModel.getListener());
+                    response.setOrderType(requestModel.getOrderType());
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
                 response=new ResponseModel();
                 response.setUrl(url);
                 response.setListener(requestModel.getListener());
-                response.setJsonObject(null);
                 response.setOrderType(requestModel.getOrderType());
             }
 
@@ -86,36 +93,41 @@ public class ServerRequester {
 
         @Override
         protected void onPostExecute(ResponseModel serverResponse) {
-            if(serverResponse.getJsonArray()!=null){
-                serverResponse.getListener().onRequestSuccess(serverResponse.getJsonArray(),serverResponse.getOrderType());
+            if(serverResponse.getResponse()!=null){
+                serverResponse.getListener().onRequestSuccess(serverResponse.getResponse(),serverResponse.getOrderType());
             }else{
                 serverResponse.getListener().onRequestFail("Exception",serverResponse.getOrderType());
             }
             super.onPostExecute(serverResponse);
         }
 
-        @TargetApi(Build.VERSION_CODES.FROYO)
         private String sendHttpReq(String reqUrl,String method) throws Exception{
-            reqUrl=reqUrl+"?consumer_key="+Constant.CONSUMER_KEY+"&consumer_secret="+Constant.CONSUMER_SECRET;
+            //reqUrl=reqUrl+"consumer_key="+Constant.CONSUMER_KEY+"&consumer_secret="+Constant.CONSUMER_SECRET;
             HttpURLConnection urlConnection = null;
             StringBuilder responseString = null;
             try {
                 URL url = new URL(reqUrl);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod(method);
-                Logger.debugLog(TAG,"sendHttpReq>>>reqUrl:"+reqUrl);
+                Logger.debugLog(TAG,"sendHttpReq>>>reqUrl:"+reqUrl+":method:"+method);
                 //with header and authentication
-//                String userCredentials = Constant.CONSUMER_KEY+":"+Constant.CONSUMER_SECRET;
-//                String basicAuth = "Basic " + new String(Base64.encode(userCredentials.getBytes(),0));
-//                urlConnection.setRequestProperty ("Authorization", basicAuth);
-//                urlConnection.setRequestProperty("Content-Type","application/json");
+                String userCredentials = Constant.CONSUMER_KEY+":"+Constant.CONSUMER_SECRET;
+                byte[] bytesEncoded = Base64.encodeBase64(userCredentials .getBytes());
+                String authEncoded = new String(bytesEncoded);
+                String basicAuth = "Basic " + authEncoded;
+                urlConnection.setRequestProperty ("Authorization", basicAuth);
+                urlConnection.setRequestProperty("Content-Type","application/json");
                 //
                 if(method.equals(MethodType.PUT.toString())){
-                    urlConnection.setRequestProperty("Content-Type","application/json");
-                    OutputStreamWriter outputStreamWriter=new OutputStreamWriter(urlConnection.getOutputStream());
-                    outputStreamWriter.write("status"+":"+ "completed");
-                    outputStreamWriter.close();
                     urlConnection.setDoOutput(true);
+                    OutputStreamWriter outputStreamWriter=new OutputStreamWriter(urlConnection.getOutputStream());
+                    JSONObject jsonObject=new JSONObject();
+                    jsonObject.put("status","completed");
+                    Logger.debugLog(TAG,"sendHttpReq>>>putting>>>>>>>>>>>>"+jsonObject.toString());
+                    outputStreamWriter.write(jsonObject.toString());
+                    outputStreamWriter.flush();
+                    outputStreamWriter.close();
+                    urlConnection.getInputStream();
                 }
                 //urlConnection.setConnectTimeout(CONNECTION_TIME_OUT);
                 //urlConnection.setReadTimeout(READ_TIME_OUT);
@@ -133,7 +145,9 @@ public class ServerRequester {
                     Logger.debugLog(TAG, "sendHttpReq Sucs responseString " + responseString.toString());
                     return responseString.toString();
                 } else {
-                   Logger.debugLog(TAG, " Failed ");
+                    Logger.debugLog(TAG, " Failed ");
+                    return "";
+
                 }
             } catch (IOException | InternalError e) {
             } finally {

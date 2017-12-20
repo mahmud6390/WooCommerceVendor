@@ -8,4 +8,9 @@
     <string name="oder_name"><![CDATA[<b> %1$s </b> by <font color=#84cff9>%2$s</font> </br> <font color=#84cff9>%3$s</font>]]></string>
     <string name="ship_to"><![CDATA[<font color=#84cff9>%1$s</font> <font color=#ffc8c8c8></br>Via %2$s</font>]]></string>
     <string name="total"><![CDATA[<font color=#84cff9>%1$s</font>  <font color=#ffc8c8c8></br>Via %2$s</font>]]></string>
+    <string name="scan_barcode_for_reciept">Scan Barcode for Reciept</string>
+    <string name="scan_barcode">Scan Barcode</string>
+    <string name="check_order_list">Check Order List</string>
+    <string name="order_list_menu">Order List</string>
+    <string name="home_page">Home page</string>
 </resources>

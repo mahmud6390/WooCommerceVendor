@@ -18,7 +18,8 @@ public interface InputParam {
      String currency="currency";
      String shipping_lines="shipping_lines";
      String date_created="date_created";
-
+     String meta_data="meta_data";
+     String value="value";
      String first_name="first_name";
      String last_name="last_name";
      String company="company";
@@ -31,4 +32,6 @@ public interface InputParam {
      String email="email";
      String phone="phone";
      String method_title="method_title";
+
+     String order_key="order_key";
 }

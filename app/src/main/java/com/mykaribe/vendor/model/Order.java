@@ -20,6 +20,16 @@ public class Order {
         this.status = status;
     }
 
+    public String getOrderKey() {
+        return orderKey;
+    }
+
+    public void setOrderKey(String orderKey) {
+        this.orderKey = orderKey;
+    }
+
+    private String orderKey;
+
     public Billing getBilling() {
         return billing;
     }

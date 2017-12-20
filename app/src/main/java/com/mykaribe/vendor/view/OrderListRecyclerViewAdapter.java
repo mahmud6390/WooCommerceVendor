@@ -66,7 +66,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 String orderName=getOrderText(order.getId()+"",order.getBilling().getFirst_name()+" "+order.getBilling().getLast_name(),order.getBilling().getEmail());
                 Logger.debugLog(TAG,"OnbindView>>orderName:"+orderName);
                 viewHolder.orderName.setText(Html.fromHtml(orderName));
-                viewHolder.shipTo.setText(Html.fromHtml(getShipTo(order.getShipping(),order.getShipping_lines().getMethod_title())));
+               // viewHolder.shipTo.setText(Html.fromHtml(getShipTo(order.getShipping(),order.getShipping_lines().getMethod_title())));
                 try{
                     viewHolder.date.setText(getDate(order.getDate_created()));
                 }catch (Exception e){
@@ -110,12 +110,11 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     }
     private final class ContentViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView orderName,shipTo,date,total,status;
+        private TextView orderName,date,total,status;
 
         public ContentViewHolder(View itemView) {
             super(itemView);
             orderName=(TextView)itemView.findViewById(R.id.text_view_order_name);
-            shipTo=(TextView)itemView.findViewById(R.id.text_view_ship_to);
             date=(TextView)itemView.findViewById(R.id.text_view_date);
             total=(TextView)itemView.findViewById(R.id.text_view_total);
             status=(TextView)itemView.findViewById(R.id.text_view_status);

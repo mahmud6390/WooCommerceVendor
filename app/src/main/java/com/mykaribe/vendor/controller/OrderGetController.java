@@ -36,7 +36,7 @@ public class OrderGetController implements IServerRequestCallback,InputParam {
 
 
     @Override
-    public void onRequestSuccess(JSONArray serverResponse, int orderType) {
+    public void onRequestSuccess(String serverResponse, int orderType) {
         if(orderType== Constant.ORDER_TYPE_LIST){
             Logger.debugLog(TAG,"onRequestSuccess>>>");
             try {
@@ -54,9 +54,9 @@ public class OrderGetController implements IServerRequestCallback,InputParam {
         uiCallback.onOrderListUpdate(new ArrayList<Order>());
     }
 
-    private List<Order> getOrderListFromResponse(JSONArray serverResponse) throws Exception{
+    private List<Order> getOrderListFromResponse(String response) throws Exception{
         List<Order> orders=new ArrayList<>();
-
+        JSONArray serverResponse=new JSONArray(response);
         for(int i=0;i<serverResponse.length();i++){
             JSONObject jsonObj=serverResponse.getJSONObject(i);
             Order order=new Order();

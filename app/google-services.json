@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "888081972066",
+    "firebase_url": "https://mykaribe-android-app.firebaseio.com",
+    "project_id": "mykaribe-android-app",
+    "storage_bucket": "mykaribe-android-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888081972066:android:8d0c834ef623d0d3",
+        "android_client_info": {
+          "package_name": "com.mykaribe.vendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888081972066-97pkv66qbkc07e0fo334jq5et00vi959.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mykaribe.vendor",
+            "certificate_hash": "b5cd21f2c01e3c0c0a5fab1710b2d5e07ae59b66"
+          }
+        },
+        {
+          "client_id": "888081972066-1eigqm7mje14r3sgq7cvdfaepk60a6ab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV2pZe3J-iC-Hn9QsP-k1vioC4xnf6VHQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888081972066-1eigqm7mje14r3sgq7cvdfaepk60a6ab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
