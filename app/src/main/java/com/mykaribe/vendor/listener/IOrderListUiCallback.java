@@ -10,4 +10,5 @@ import java.util.List;
 public interface IOrderListUiCallback {
     void onOrderListUpdate(List<Order> orders);
     void onOrderUpdate(Order order);
+    void onOrderFailed();
 }

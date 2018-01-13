@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    >
+   <RelativeLayout
+       android:id="@+id/list_item_bar"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@color/white"
+       android:padding="5dp"
+       >
+
+
+    <LinearLayout
+        android:id="@+id/date_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/year_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2017"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/date_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="21"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/month_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DEC"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/order_name_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@+id/currency_bar"
+        android:layout_toRightOf="@+id/date_bar"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/order_number_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="order #3223"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/name_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Sajed evan"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/email_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="someone@gmail.com"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/currency_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/status_txt"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/price_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$1496666"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/status_txt"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:text="on hold" />
+   </RelativeLayout>
+</android.support.v7.widget.CardView>

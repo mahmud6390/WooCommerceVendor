@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
+import com.mykaribe.vendor.R;
 import com.mykaribe.vendor.controller.RetriveOrderIdController;
 import com.mykaribe.vendor.listener.IOrderListUiCallback;
 import com.mykaribe.vendor.model.Order;
@@ -63,13 +65,39 @@ public class BarcodeScannerActivity extends AppCompatActivity implements ZXingSc
             }
 
             @Override
+            public void onOrderFailed() {
+               String title = getString(R.string.scan_unsuccess_title);
+              String  message = getString(R.string.scan_unsuccess_msg);
+                AlertDialog.Builder builder = new AlertDialog.Builder(BarcodeScannerActivity.this);
+                builder.setTitle(Html.fromHtml(title));
+                builder.setMessage(Html.fromHtml(message));
+                AlertDialog alert1 = builder.create();
+                alert1.setCancelable(true);
+                alert1.setButton(DialogInterface.BUTTON_POSITIVE, "Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+                alert1.show();
+            }
+
+            @Override
             public void onOrderUpdate(Order order) {
                 dialog.dismiss();
-                if(order!=null) {
+                String title,message;
+                if(order!=null && order.getId()!=-1) {
+                    title = getString(R.string.scan_success_title);
+                    message = getString(R.string.scan_success_msg);
+                }else {
+                    title = getString(R.string.scan_unsuccess_title);
+                    message = getString(R.string.scan_unsuccess_msg);
+                }
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(BarcodeScannerActivity.this);
-                    builder.setTitle("Order status update");
-                    builder.setMessage("Successfully update order #" + order.getId() + " status as " + order.getStatus() + "\n " +
-                            "from this barcode (" + rawResult.getText() + ")");
+                    builder.setTitle(Html.fromHtml(title));
+                    builder.setMessage(Html.fromHtml(message));
                     AlertDialog alert1 = builder.create();
                     alert1.setCancelable(true);
                     alert1.setButton(DialogInterface.BUTTON_POSITIVE, "Ok", new DialogInterface.OnClickListener() {
@@ -80,9 +108,6 @@ public class BarcodeScannerActivity extends AppCompatActivity implements ZXingSc
                         }
                     });
                     alert1.show();
-                }else{
-                    Toast.makeText(BarcodeScannerActivity.this,"Failed to scan",Toast.LENGTH_SHORT).show();
-                }
             }
         });
 //       Logger.debugLog("Barcodehandler", rawResult.getText()); // Prints scan results

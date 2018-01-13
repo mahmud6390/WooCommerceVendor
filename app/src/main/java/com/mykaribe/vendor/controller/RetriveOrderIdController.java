@@ -49,7 +49,13 @@ public class RetriveOrderIdController implements IServerRequestCallback,InputPar
         switch (orderType){
             case Constant.ORDER_TYPE_ID:
                 try{
-                    updateOrder(getOrderId(response));
+                    int orderId=getOrderId(response);
+                    if(orderId==-1){
+                        uiCallback.onOrderFailed();
+                    }else{
+                        updateOrder(orderId);
+                    }
+
                 }catch (Exception e){
 
                 }
@@ -82,6 +88,8 @@ public class RetriveOrderIdController implements IServerRequestCallback,InputPar
                 Logger.debugLog(TAG,"getOrderId>>>orderId:"+orderId+":barcode:"+barcode);
                 if(this.barcode.equalsIgnoreCase(barcode)){
                     return orderId;
+                }else{
+                    orderId=-1;
                 }
 
             }

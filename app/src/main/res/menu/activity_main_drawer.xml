@@ -5,15 +5,15 @@
         <item
             android:id="@+id/home"
             android:icon="@android:drawable/ic_menu_myplaces"
-            android:title="Home" />
+            android:title="@string/home" />
         <item
             android:id="@+id/scan_barcode"
             android:icon="@android:drawable/ic_menu_camera"
-            android:title="Scan Barcode" />
+            android:title="@string/scan_barcode" />
         <item
             android:id="@+id/order_list"
             android:icon="@android:drawable/ic_menu_directions"
-            android:title="Order List" />
+            android:title="@string/order_list" />
         <item
             android:id="@+id/d"
             android:title="" />
@@ -26,7 +26,7 @@
         <item
             android:id="@+id/logout"
             android:icon="@android:drawable/ic_dialog_alert"
-            android:title="Logout" />
+            android:title="@string/logout" />
 
     </group>
 </menu>

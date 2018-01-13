@@ -12,4 +12,6 @@
     <color name="black">#000000</color>
     <color name="selected_color">#f9f9f9</color>
     <color name="login_btn">#bf3e52</color>
+    <color name="completed_cell">#f2f2f2</color>
+    <color name="order_cell_txt">#cfcfcf</color>
 </resources>

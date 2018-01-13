@@ -13,4 +13,11 @@
     <string name="check_order_list">Check Order List</string>
     <string name="order_list_menu">Order List</string>
     <string name="home_page">Home page</string>
+    <string name="home">Home</string>
+    <string name="logout">Logout</string>
+    <string name="scan_success_title"><![CDATA[<b>Scan Successfully!</b>]]></string>
+    <string name="scan_unsuccess_title"><![CDATA[<b>Invalid Barcode!</b>]]></string>
+    <string name="scan_success_msg"><![CDATA[Order status is <b>"Completed"</b> now]]></string>
+    <string name="scan_unsuccess_msg">Not getting valid order</string>
+    <string name="order_number"><![CDATA[Order: <font color=#3ebfab>%1$s</font>]]></string>
 </resources>

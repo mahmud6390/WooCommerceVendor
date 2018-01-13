@@ -80,6 +80,11 @@ public class OrderListFragment extends Fragment implements View.OnClickListener{
             public void onOrderUpdate(Order order) {
 
             }
+
+            @Override
+            public void onOrderFailed() {
+
+            }
         });
     }
 
