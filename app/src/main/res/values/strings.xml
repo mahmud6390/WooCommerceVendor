@@ -20,4 +20,8 @@
     <string name="scan_success_msg"><![CDATA[Order status is <b>"Completed"</b> now]]></string>
     <string name="scan_unsuccess_msg">Not getting valid order</string>
     <string name="order_number"><![CDATA[Order: <font color=#3ebfab>%1$s</font>]]></string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="faile_login">Failed to login</string>
 </resources>

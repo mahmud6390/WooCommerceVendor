@@ -66,7 +66,7 @@ public class ServerRequester {
             Logger.debugLog(TAG,"doInBackground>>>url:"+url);
             ResponseModel response =null;
             try {
-                String res=sendHttpReq(url,requestModel.getMethodType());
+                String res=sendHttpReq(url,requestModel.getMethodType(),requestModel.isNoAuth());
                 if(!TextUtils.isEmpty(res)){
                     response=new ResponseModel();
                     response.setResponse(res);
@@ -101,7 +101,7 @@ public class ServerRequester {
             super.onPostExecute(serverResponse);
         }
 
-        private String sendHttpReq(String reqUrl,String method) throws Exception{
+        private String sendHttpReq(String reqUrl,String method,boolean isNoAuth) throws Exception{
             //reqUrl=reqUrl+"consumer_key="+Constant.CONSUMER_KEY+"&consumer_secret="+Constant.CONSUMER_SECRET;
             HttpURLConnection urlConnection = null;
             StringBuilder responseString = null;
@@ -109,13 +109,16 @@ public class ServerRequester {
                 URL url = new URL(reqUrl);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod(method);
-                Logger.debugLog(TAG,"sendHttpReq>>>reqUrl:"+reqUrl+":method:"+method);
+                Logger.debugLog(TAG,"sendHttpReq>>>reqUrl:"+reqUrl+":method:"+method+":isNoAuth:"+isNoAuth);
                 //with header and authentication
-                String userCredentials = Constant.CONSUMER_KEY+":"+Constant.CONSUMER_SECRET;
-                byte[] bytesEncoded = Base64.encodeBase64(userCredentials .getBytes());
-                String authEncoded = new String(bytesEncoded);
-                String basicAuth = "Basic " + authEncoded;
-                urlConnection.setRequestProperty ("Authorization", basicAuth);
+                if(!isNoAuth){
+                    String userCredentials = Constant.CONSUMER_KEY+":"+Constant.CONSUMER_SECRET;
+                    byte[] bytesEncoded = Base64.encodeBase64(userCredentials .getBytes());
+                    String authEncoded = new String(bytesEncoded);
+                    String basicAuth = "Basic " + authEncoded;
+                    urlConnection.setRequestProperty ("Authorization", basicAuth);
+                }
+
                 urlConnection.setRequestProperty("Content-Type","application/json");
                 //
                 if(method.equals(MethodType.PUT.toString())){

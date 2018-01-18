@@ -34,4 +34,13 @@ public interface InputParam {
      String method_title="method_title";
 
      String order_key="order_key";
+     String vendor_id="vendor_id";
+     String name="name";
+     String user_id="user_id";
+     String email_vendor="email";
+     String vendor_image_url="image_url";
+
+     String product_list="product_list";
+     String line_items="line_items";
+     String product_id="product_id";
 }

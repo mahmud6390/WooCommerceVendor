@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3ebfab</color>
-    <color name="colorPrimaryDark">#3ebfab</color>
-    <color name="colorAccent">#87d6c9</color>
+    <color name="colorPrimary">#3EBFAB</color>
+    <color name="colorPrimaryDark">#3EBFAB</color>
+    <color name="colorAccent">#89D9CC</color>
     <color name="white">#FFFFFF</color>
     <color name="dark_gray">#333333</color>
     <color name="light_gray">#ffc8c8c8</color>
@@ -11,7 +11,7 @@
     <color name="red">#FF0000</color>
     <color name="black">#000000</color>
     <color name="selected_color">#f9f9f9</color>
-    <color name="login_btn">#bf3e52</color>
+    <color name="login_btn">#BF3E52</color>
     <color name="completed_cell">#f2f2f2</color>
     <color name="order_cell_txt">#cfcfcf</color>
 </resources>

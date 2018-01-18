@@ -123,6 +123,6 @@
         app:backgroundTint="@color/login_btn"
         app:borderWidth="0dp"
         app:elevation="0dp"
-        android:src="@drawable/camera_h"
+        android:src="@drawable/camera_icon"
          />
 </RelativeLayout>

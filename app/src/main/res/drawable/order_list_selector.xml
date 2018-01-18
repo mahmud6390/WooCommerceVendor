@@ -6,9 +6,9 @@
       </shape>
    </item>
    <item
-       android:drawable="@drawable/order_list"
-       android:bottom="8dp"
-       android:left="8dp"
-       android:right="8dp"
-       android:top="8dp"/>
+       android:drawable="@drawable/list_icon"
+       android:bottom="20dp"
+       android:left="20dp"
+       android:right="20dp"
+       android:top="20dp"/>
 </layer-list>

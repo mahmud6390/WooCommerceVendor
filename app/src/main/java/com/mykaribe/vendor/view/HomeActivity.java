@@ -26,6 +26,7 @@ import com.mykaribe.vendor.R;
 import com.mykaribe.vendor.communication.PushListenerService;
 import com.mykaribe.vendor.utils.Constant;
 import com.mykaribe.vendor.utils.Logger;
+import com.mykaribe.vendor.utils.PreferenceHelper;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
 
@@ -153,7 +154,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 setOrderListFragment();
                 break;
             case R.id.logout:
-
+                PreferenceHelper.putInt(Constant.VENDOR_ID,0);
+                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+                HomeActivity.this.finish();
                 break;
         }
 

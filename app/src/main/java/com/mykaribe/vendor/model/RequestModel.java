@@ -49,4 +49,14 @@ public class RequestModel {
     }
 
     private int orderType;
+
+    public boolean isNoAuth() {
+        return isNoAuth;
+    }
+
+    public void setNoAuth(boolean noAuth) {
+        isNoAuth = noAuth;
+    }
+
+    private boolean isNoAuth=false;
 }
