@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
@@ -74,35 +75,52 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    >
 
                     <ImageView
+                        android:id="@+id/key_img"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/password"
+                        android:layout_centerVertical="true"
                         android:tint="@color/white" />
 
                     <ImageView
+                        android:id="@+id/line_img"
+                        android:layout_toRightOf="@+id/key_img"
                         android:layout_width="2dp"
                         android:layout_height="20dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
+                        android:layout_centerVertical="true"
                         android:background="@drawable/white_line_vertical" />
+
 
                     <EditText
                         android:id="@+id/password_txt"
+                        android:layout_toRightOf="@+id/line_img"
                         android:layout_width="match_parent"
+                        android:layout_toLeftOf="@+id/password_hide_show"
                         android:layout_height="40dp"
                         android:background="@color/transparent"
                         android:gravity="center_vertical"
                         android:hint="@string/password"
                         android:inputType="textPassword"
                         android:textColor="@color/white"
+                        android:layout_centerVertical="true"
                         android:textColorHint="@color/white" />
-                </LinearLayout>
+                    <ImageView
+                        android:id="@+id/password_hide_show"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/password_show" />
+
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

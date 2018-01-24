@@ -2,10 +2,12 @@ package com.mykaribe.vendor.utils;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 
 import com.mykaribe.vendor.controller.ProductIdController;
 import com.mykaribe.vendor.listener.IProductIdListCallback;
+import com.mykaribe.vendor.view.LoginActivity;
 
 import java.util.ArrayList;
 
@@ -34,6 +36,9 @@ public class App extends Application implements IProductIdListCallback{
     public static ArrayList<Integer> getsProductIdList(){
         return sProductIdList;
     }
+    public static void setProductIdList(ArrayList<Integer> list){
+        sProductIdList.addAll(list);
+    }
 
     @Override
     public void onSuccessList(ArrayList<Integer> productId) {
@@ -46,6 +51,10 @@ public class App extends Application implements IProductIdListCallback{
     public void onFailed() {
         Logger.debugLog("APP","onFailed>>>>");
         PreferenceHelper.removeAllData();
+        Intent intent=new Intent(getContext(),LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
 
     }
 }

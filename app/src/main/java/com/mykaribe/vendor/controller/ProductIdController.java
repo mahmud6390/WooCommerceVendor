@@ -20,11 +20,8 @@ import java.util.ArrayList;
  */
 public class ProductIdController implements IServerRequestCallback,InputParam {
     private IProductIdListCallback uiCallback;
-    private String userName,password;
     public void getProductIdList(String userName,String password,IProductIdListCallback uiCallback){
         this.uiCallback=uiCallback;
-        this.userName=userName;
-        this.password=password;
         String url= Constant.GET_PRODUCT_FETCH_URL+"username="+userName+"&password="+password;
         RequestModel requestModel=new RequestModel(url,this, MethodType.GET.toString(),Constant.ORDER_TYPE_PRODUCT);
         requestModel.setNoAuth(true);
@@ -35,7 +32,7 @@ public class ProductIdController implements IServerRequestCallback,InputParam {
         if(orderType==Constant.ORDER_TYPE_PRODUCT){
 
             ArrayList<Integer> productIdList=parseProductList(response);
-            if(productIdList.size()>0){
+            if(productIdList!=null && productIdList.size()>0){
                 uiCallback.onSuccessList(productIdList);
             }else {
                 uiCallback.onFailed();
@@ -49,12 +46,12 @@ public class ProductIdController implements IServerRequestCallback,InputParam {
         uiCallback.onFailed();
     }
     private ArrayList<Integer> parseProductList(String response){
-        ArrayList<Integer> productIdList=new ArrayList<>();
+        ArrayList<Integer> productIdList=null;
         try {
-            String jsonpart=response.substring(response.indexOf("{"),response.lastIndexOf("}")+1);
-            JSONObject object=new JSONObject(jsonpart);
+           // String jsonpart=response.substring(response.indexOf("{"),response.lastIndexOf("}")+1);
+            JSONObject object=new JSONObject(response);
             JSONArray array=object.getJSONArray(product_list);
-
+            productIdList=new ArrayList<>();
             for(int i=0;i<array.length();i++){
                 JSONObject object1=array.getJSONObject(i);
                 productIdList.add(object1.optInt(id));

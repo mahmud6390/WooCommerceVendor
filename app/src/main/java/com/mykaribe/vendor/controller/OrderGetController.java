@@ -9,11 +9,13 @@ import com.mykaribe.vendor.model.Order;
 import com.mykaribe.vendor.model.RequestModel;
 import com.mykaribe.vendor.model.Shipping;
 import com.mykaribe.vendor.model.ShippingLine;
+import com.mykaribe.vendor.utils.App;
 import com.mykaribe.vendor.utils.Constant;
 import com.mykaribe.vendor.utils.Logger;
 import com.mykaribe.vendor.utils.MethodType;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -59,6 +61,9 @@ public class OrderGetController implements IServerRequestCallback,InputParam {
         JSONArray serverResponse=new JSONArray(response);
         for(int i=0;i<serverResponse.length();i++){
             JSONObject jsonObj=serverResponse.getJSONObject(i);
+            if(!isExistProductId(jsonObj)){
+               continue;
+            }
             Order order=new Order();
             order.setId(jsonObj.optInt(id));
             order.setTotal(jsonObj.optString(total));
@@ -98,6 +103,21 @@ public class OrderGetController implements IServerRequestCallback,InputParam {
 
 
         return orders;
+    }
+    private boolean isExistProductId(JSONObject jsonObj) throws JSONException{
+        boolean isExist=false;
+        JSONArray array=jsonObj.getJSONArray(line_items);
+        for(int i=0;i<array.length();i++){
+            int productId=array.getJSONObject(i).optInt(product_id);
+            ArrayList<Integer> fetchedProductId=App.getsProductIdList();
+            Logger.debugLog(TAG,"isExistProductId>>>productId:"+productId+":App.getsProductIdList():"+fetchedProductId);
+            if(fetchedProductId.contains(productId)){
+                Logger.debugLog(TAG,"isExistProductId>>>exist");
+                return true;
+            }
+        }
+        return isExist;
+
     }
 
 

@@ -4,27 +4,36 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.mykaribe.vendor.R;
 import com.mykaribe.vendor.controller.LoginController;
+import com.mykaribe.vendor.controller.ProductIdController;
 import com.mykaribe.vendor.listener.ILoginUiCallback;
+import com.mykaribe.vendor.listener.IProductIdListCallback;
 import com.mykaribe.vendor.model.Vendor;
+import com.mykaribe.vendor.utils.App;
 import com.mykaribe.vendor.utils.Constant;
 import com.mykaribe.vendor.utils.Logger;
 import com.mykaribe.vendor.utils.PreferenceHelper;
 
+import java.util.ArrayList;
+
 /**
  * Created by USER on 17/1/2018.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener,ILoginUiCallback{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener,ILoginUiCallback,IProductIdListCallback {
     private EditText editTextUserName,editTextPassword;
     private Button buttonLogin;
+    private ImageView imageViewPasswordHideShow;
     private ProgressBar progressBar;
+    private boolean isShowPassword=false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +43,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonLogin=(Button)findViewById(R.id.login_btn);
         progressBar=(ProgressBar)findViewById(R.id.progress_bar);
         buttonLogin.setOnClickListener(this);
+        imageViewPasswordHideShow=(ImageView)findViewById(R.id.password_hide_show);
+        imageViewPasswordHideShow.setOnClickListener(this);
     }
 
     @Override
@@ -45,6 +56,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     new LoginController().sendLoginInfo(editTextUserName.getText().toString(),editTextPassword.getText().toString(),LoginActivity.this);
 
                 }
+                break;
+            case R.id.password_hide_show:
+                if(isShowPassword){
+                    editTextPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    imageViewPasswordHideShow.setImageResource(R.drawable.password_show);
+                }else{
+                    editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    imageViewPasswordHideShow.setImageResource(R.drawable.password_hide);
+                }
+                isShowPassword=!isShowPassword;
                 break;
 
         }
@@ -74,13 +95,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         PreferenceHelper.putString(Constant.VENDOR_IMAGE,vendor.getImageUrl());
         int vendorId= PreferenceHelper.getInt(Constant.VENDOR_ID,0);
         Logger.debugLog("LOGIN_RESPONSE","onLoginSuccess>>>vendorId:"+vendorId);
-        startActivity(new Intent(this,HomeActivity.class));
-        LoginActivity.this.finish();
+        new ProductIdController().getProductIdList(vendor.getUserName(),vendor.getPassword(),this);
+
     }
 
     @Override
     public void onLoginFailed() {
         progressBar.setVisibility(View.INVISIBLE);
         Toast.makeText(this, R.string.faile_login,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccessList(ArrayList<Integer> productId) {
+        Logger.debugLog("APP","onSuccessList>>>>productId:"+productId);
+        App.setProductIdList(productId);
+        startActivity(new Intent(this,HomeActivity.class));
+        LoginActivity.this.finish();
+    }
+
+    @Override
+    public void onFailed() {
+
     }
 }

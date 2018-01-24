@@ -62,7 +62,7 @@ public class LoginController implements IServerRequestCallback,InputParam {
             vendor.setEmail(jsonObject.optString(email_vendor));
             vendor.setImageUrl(jsonObject.optString(vendor_image_url));
             vendor.setUserName(userName);
-            vendor.setUserName(password);
+            vendor.setPassword(password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
