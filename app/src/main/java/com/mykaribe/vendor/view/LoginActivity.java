@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button buttonLogin;
     private ImageView imageViewPasswordHideShow;
     private ProgressBar progressBar;
-    private boolean isShowPassword=false;
+    private boolean isShowPassword=true;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +60,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.password_hide_show:
                 if(isShowPassword){
                     editTextPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    imageViewPasswordHideShow.setImageResource(R.drawable.password_show);
+                    imageViewPasswordHideShow.setImageResource(R.drawable.password_hide);
                 }else{
                     editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    imageViewPasswordHideShow.setImageResource(R.drawable.password_hide);
+                    imageViewPasswordHideShow.setImageResource(R.drawable.password_show);
                 }
                 isShowPassword=!isShowPassword;
                 break;
