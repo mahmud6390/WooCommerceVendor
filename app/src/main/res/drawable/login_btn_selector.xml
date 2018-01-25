@@ -12,8 +12,6 @@
         android:color="@color/white" >
     </stroke>
 
-    <padding
-        android:bottom="6dp" />
     <solid android:color="@color/colorAccent" />
 
 </shape>

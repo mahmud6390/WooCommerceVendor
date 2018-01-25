@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,14 +17,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
 import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.mykaribe.vendor.R;
 import com.mykaribe.vendor.communication.PushListenerService;
+import com.mykaribe.vendor.utils.App;
 import com.mykaribe.vendor.utils.Constant;
 import com.mykaribe.vendor.utils.Logger;
 import com.mykaribe.vendor.utils.PreferenceHelper;
@@ -32,6 +40,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private Toolbar toolbar;
+    private View headerView;
+    private ProfileImageView profileImageView;
+    private TextView nameTxt,emailTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +57,48 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        headerView=navigationView.getHeaderView(0);
 
         navigationView.setNavigationItemSelectedListener(this);
 
-//        profileImageView=(ProfileImageView)navigationView.findViewById(R.id.imageView);
-//        name=(TextView)navigationView.findViewById(R.id.profile_name) ;
+        profileImageView=(ProfileImageView)headerView.findViewById(R.id.imageView);
+        nameTxt=(TextView)headerView.findViewById(R.id.profile_name) ;
+        emailTxt=(TextView)headerView.findViewById(R.id.profile_email) ;
 //
 //        profileImageView.setOnClickListener(this);
 
-
+        setNavigationView();
+        setProfileImage(PreferenceHelper.getString(Constant.VENDOR_IMAGE,""));
         setHomePageFragment();
         setUpAmazonService();
 
+    }
+    private void setNavigationView(){
+        nameTxt.setText(PreferenceHelper.getString(Constant.USER_NAME,""));
+        emailTxt.setText(PreferenceHelper.getString(Constant.VENDOR_EMAIL,""));
+    }
+    private void setProfileImage(String url){
+        ViewTarget viewTarget = new ViewTarget<ProfileImageView, GlideDrawable>(profileImageView){
+            @Override
+            public void onLoadStarted(Drawable placeholder) {
+            }
+
+            @Override
+            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                profileImageView.setImage(errorDrawable.getCurrent());
+            }
+
+            @Override
+            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                profileImageView.setImage(resource.getCurrent());
+            }
+        };
+        Glide.with(App.getContext())
+                .load(url)
+                .placeholder(R.drawable.app_icon)
+                .error(R.drawable.app_icon)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(viewTarget);
     }
     public void setOrderListFragment(){
         toolbar.setTitle(R.string.order_list);
@@ -133,7 +174,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fab:
-                startActivity(new Intent(HomeActivity.this, BarcodeScannerActivity.class));
+                if(App.isCameraPermissionOk(HomeActivity.this)){
+                    startActivity(new Intent(HomeActivity.this, BarcodeScannerActivity.class));
+                }
                 break;
         }
 
@@ -148,7 +191,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 setHomePageFragment();
                 break;
             case R.id.scan_barcode:
-                startActivity(new Intent(this, BarcodeScannerActivity.class));
+                if(App.isCameraPermissionOk(HomeActivity.this)){
+                    startActivity(new Intent(HomeActivity.this, BarcodeScannerActivity.class));
+                }
                 break;
             case  R.id.order_list:
                 setOrderListFragment();

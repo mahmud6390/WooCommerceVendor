@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mykaribe.vendor.R;
+import com.mykaribe.vendor.utils.App;
 
 /**
  * Created by USER on 21/12/2017.
@@ -33,7 +34,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.card_view_barcode:
-                startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
+                if(App.isCameraPermissionOk(getActivity())){
+                    startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
+                }
                 break;
             case R.id.card_view_order_list:
                 if(getActivity()!=null && getActivity() instanceof HomeActivity){

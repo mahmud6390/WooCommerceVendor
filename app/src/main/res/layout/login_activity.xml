@@ -45,8 +45,8 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/user_icon"
                         android:tint="@color/white" />
 
@@ -65,7 +65,7 @@
                         android:gravity="center_vertical"
                         android:hint="@string/username"
                         android:textColor="@color/white"
-                        android:textColorHint="@color/white" />
+                        android:textColorHint="@color/order_cell_txt" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -82,8 +82,8 @@
 
                     <ImageView
                         android:id="@+id/key_img"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/password"
                         android:layout_centerVertical="true"
                         android:tint="@color/white" />
@@ -111,11 +111,11 @@
                         android:inputType="textPassword"
                         android:textColor="@color/white"
                         android:layout_centerVertical="true"
-                        android:textColorHint="@color/white" />
+                        android:textColorHint="@color/order_cell_txt" />
                     <ImageView
                         android:id="@+id/password_hide_show"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:background="@drawable/password_show" />

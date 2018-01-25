@@ -25,6 +25,7 @@ import com.mykaribe.vendor.communication.PushListenerService;
 import com.mykaribe.vendor.controller.OrderGetController;
 import com.mykaribe.vendor.listener.IOrderListUiCallback;
 import com.mykaribe.vendor.model.Order;
+import com.mykaribe.vendor.utils.App;
 import com.mykaribe.vendor.utils.Constant;
 import com.mykaribe.vendor.utils.Logger;
 import com.mykaribe.vendor.view.BarcodeScannerActivity;
@@ -130,7 +131,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fab:
-                startActivity(new Intent(MainActivity.this, BarcodeScannerActivity.class));
+                if(App.isCameraPermissionOk(MainActivity.this)){
+                    startActivity(new Intent(MainActivity.this, BarcodeScannerActivity.class));
+                }
+
                 break;
         }
 

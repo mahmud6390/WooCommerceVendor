@@ -46,11 +46,14 @@ public class BarcodeScannerActivity extends AppCompatActivity implements ZXingSc
     @Override
     public void onPause() {
         super.onPause();
-        mScannerView.stopCamera();           // Stop camera on pause
+        if(mScannerView!=null){
+            mScannerView.stopCamera();
+        }
         if(dialog!=null && dialog.isShowing()){
             dialog.dismiss();
         }
     }
+
 
     @Override
     public void handleResult(final Result rawResult) {

@@ -1,8 +1,14 @@
 package com.mykaribe.vendor.utils;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.mykaribe.vendor.controller.ProductIdController;
@@ -17,6 +23,7 @@ import java.util.ArrayList;
 public class App extends Application implements IProductIdListCallback{
     private static Context sContext;
     private static ArrayList<Integer> sProductIdList;
+    public static final int REQUEST_CODE_CAMERA = 5;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -45,6 +52,31 @@ public class App extends Application implements IProductIdListCallback{
         Logger.debugLog("APP","onSuccessList>>>>productId:"+productId);
         sProductIdList.addAll(productId);
 
+    }
+    public static boolean isCameraPermissionOk(Activity activity){
+
+        if (!App.check_camera_Permission(activity)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                activity.requestPermissions(new String[]{Manifest.permission.CAMERA},
+                        REQUEST_CODE_CAMERA);
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+
+    public static boolean check_camera_Permission(Activity activity) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+            return true;
+        }
+
+        int result = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

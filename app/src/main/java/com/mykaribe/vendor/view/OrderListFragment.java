@@ -18,6 +18,7 @@ import com.mykaribe.vendor.R;
 import com.mykaribe.vendor.controller.OrderGetController;
 import com.mykaribe.vendor.listener.IOrderListUiCallback;
 import com.mykaribe.vendor.model.Order;
+import com.mykaribe.vendor.utils.App;
 
 import java.util.List;
 
@@ -112,7 +113,9 @@ public class OrderListFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fab:
-                startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
+                if(App.isCameraPermissionOk(getActivity())){
+                    startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
+                }
                 break;
         }
     }
