@@ -14,4 +14,6 @@
     <color name="login_btn">#BF3E52</color>
     <color name="completed_cell">#f2f2f2</color>
     <color name="order_cell_txt">#cfcfcf</color>
+    <color name="progress_bar_color">#3EBFAB</color>
+    <color name="date_order">#9A9A9A</color>
 </resources>

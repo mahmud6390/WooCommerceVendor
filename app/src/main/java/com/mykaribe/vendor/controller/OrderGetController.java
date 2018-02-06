@@ -93,10 +93,10 @@ public class OrderGetController implements IServerRequestCallback,InputParam {
             ship.setCountry(shippingObj.optString(country));
             order.setShipping(ship);
             JSONArray shippingLine=serverResponse.getJSONObject(i).getJSONArray(shipping_lines);
-            ShippingLine line=new ShippingLine();
-            String shippingMethod=shippingLine.getJSONObject(0).optString(method_title);
-            line.setMethod_title(shippingMethod);
-            order.setShipping_lines(line);
+//            ShippingLine line=new ShippingLine();
+//            String shippingMethod=shippingLine.getJSONObject(0).optString(method_title);
+//            line.setMethod_title(shippingMethod);
+//            order.setShipping_lines(line);
             orders.add(order);
             Logger.debugLog(TAG,"getOrderListFromResponse>>>order:"+order.toString());
         }

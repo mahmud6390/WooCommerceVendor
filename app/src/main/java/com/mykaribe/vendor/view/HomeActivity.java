@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.LocalBroadcastManager;
@@ -58,7 +59,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         headerView=navigationView.getHeaderView(0);
-
         navigationView.setNavigationItemSelectedListener(this);
 
         profileImageView=(ProfileImageView)headerView.findViewById(R.id.imageView);

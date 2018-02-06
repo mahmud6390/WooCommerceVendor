@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -36,9 +37,17 @@ public class BarcodeScannerActivity extends AppCompatActivity implements ZXingSc
     public void QrScanner(){
 
 
-        mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
-        setContentView(mScannerView);
+        //mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
+        setContentView(R.layout.bar_code);
+        mScannerView=(ZXingScannerView)findViewById(R.id.zxingscanner);
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
         mScannerView.startCamera();         // Start camera
 
