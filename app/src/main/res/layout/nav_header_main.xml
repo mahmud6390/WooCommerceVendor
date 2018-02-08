@@ -4,8 +4,8 @@
     android:layout_height="@dimen/nav_header_height"
     android:gravity="bottom"
     android:orientation="vertical"
-
-    android:background="@color/colorAccent"
+    android:paddingLeft="10dp"
+    android:background="@color/colorPrimary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <com.mykaribe.vendor.view.ProfileImageView
@@ -23,6 +23,7 @@
         android:layout_margin="5dp"
         android:layout_below="@+id/imageView"
         android:textColor="@color/white"
+        android:textSize="14dp"
         android:text="My Name" />
     <TextView
         android:id="@+id/profile_email"
@@ -30,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_name"
         android:textColor="@color/white"
+        android:textSize="14dp"
         android:layout_marginLeft="5dp"
         android:layout_marginBottom="10dp"
         android:text="Emjhjhhjhjhail@gmail.com" />
