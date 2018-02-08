@@ -85,11 +85,9 @@ public class RetriveOrderIdController implements IServerRequestCallback,InputPar
             JSONArray array=jsonObj.getJSONArray(meta_data);
             for(int j=0;j<array.length();j++){
                 String barcode=array.getJSONObject(j).optString(value);
-                Logger.debugLog(TAG,"getOrderId>>>orderId:"+orderId+":barcode:"+barcode);
+                Logger.debugLog(TAG,"getOrderId>>>orderId:"+orderId+":barcode:"+barcode+":"+this.barcode);
                 if(this.barcode.equalsIgnoreCase(barcode)){
                     return orderId;
-                }else{
-                    orderId=-1;
                 }
 
             }
