@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     }
     private void setNavigationView(){
-        nameTxt.setText(PreferenceHelper.getString(Constant.USER_NAME,""));
+        nameTxt.setText(PreferenceHelper.getString(Constant.VENDOR_NAME,""));
         emailTxt.setText(PreferenceHelper.getString(Constant.VENDOR_EMAIL,""));
     }
     private void setProfileImage(String url){
