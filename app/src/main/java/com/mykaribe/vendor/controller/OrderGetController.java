@@ -28,10 +28,13 @@ public class OrderGetController implements IServerRequestCallback,InputParam {
 
     private static final String TAG ="OrderGetController" ;
     private IOrderListUiCallback uiCallback;
+    private ArrayList<Integer> getsProductIdList;
 
 
-    public void getOrderList(IOrderListUiCallback uiCallback){
+    public void getOrderList(ArrayList<Integer> productIds,IOrderListUiCallback uiCallback){
         this.uiCallback=uiCallback;
+        getsProductIdList=new ArrayList<>();
+        this.getsProductIdList=productIds;
         RequestModel requestModel=new RequestModel(Constant.GET_ORDER_LIST_URL,this, MethodType.GET.toString(),Constant.ORDER_TYPE_LIST);
         ServerRequester.getInstance().processUrl(requestModel);
     }
@@ -92,7 +95,7 @@ public class OrderGetController implements IServerRequestCallback,InputParam {
             ship.setState(shippingObj.optString(state));
             ship.setCountry(shippingObj.optString(country));
             order.setShipping(ship);
-            JSONArray shippingLine=serverResponse.getJSONObject(i).getJSONArray(shipping_lines);
+            //JSONArray shippingLine=serverResponse.getJSONObject(i).getJSONArray(shipping_lines);
 //            ShippingLine line=new ShippingLine();
 //            String shippingMethod=shippingLine.getJSONObject(0).optString(method_title);
 //            line.setMethod_title(shippingMethod);
@@ -109,9 +112,8 @@ public class OrderGetController implements IServerRequestCallback,InputParam {
         JSONArray array=jsonObj.getJSONArray(line_items);
         for(int i=0;i<array.length();i++){
             int productId=array.getJSONObject(i).optInt(product_id);
-            ArrayList<Integer> fetchedProductId=App.getsProductIdList();
-            Logger.debugLog(TAG,"isExistProductId>>>productId:"+productId+":App.getsProductIdList():"+fetchedProductId);
-            if(fetchedProductId.contains(productId)){
+            Logger.debugLog(TAG,"isExistProductId>>>productId:"+productId+":App.getsProductIdList():"+getsProductIdList);
+            if(getsProductIdList.contains(productId)){
                 Logger.debugLog(TAG,"isExistProductId>>>exist");
                 return true;
             }

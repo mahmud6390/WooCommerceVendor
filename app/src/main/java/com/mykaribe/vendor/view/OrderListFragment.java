@@ -86,10 +86,10 @@ public class OrderListFragment extends Fragment implements View.OnClickListener,
             new ProductIdController().getProductIdList(userName,password,this);
         }
     }
-    private void loadOrder(){
+    private void loadOrder(ArrayList<Integer> productId){
 
         orderGetController=new OrderGetController();
-        orderGetController.getOrderList(new IOrderListUiCallback() {
+        orderGetController.getOrderList(productId,new IOrderListUiCallback() {
             @Override
             public void onOrderListUpdate(List<Order> orders) {
                 progressBar.setVisibility(View.GONE);
@@ -104,6 +104,7 @@ public class OrderListFragment extends Fragment implements View.OnClickListener,
 
             @Override
             public void onOrderFailed() {
+                progressBar.setVisibility(View.GONE);
                 showNoOrderRecord(true);
 
             }
@@ -143,8 +144,7 @@ public class OrderListFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onSuccessList(ArrayList<Integer> productId) {
-        App.setProductIdList(productId);
-        loadOrder();
+        loadOrder(productId);
 
     }
     private void showNoOrderRecord(boolean visibility){
@@ -161,6 +161,8 @@ public class OrderListFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onFailed() {
         Toast.makeText(getActivity(), R.string.failed_product,Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.GONE);
+        showNoOrderRecord(true);
 
     }
 }

@@ -28,7 +28,7 @@ import java.util.ArrayList;
 /**
  * Created by USER on 17/1/2018.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener,ILoginUiCallback,IProductIdListCallback {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener,ILoginUiCallback {
     private EditText editTextUserName,editTextPassword;
     private Button buttonLogin;
     private ImageView imageViewPasswordHideShow;
@@ -93,9 +93,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         PreferenceHelper.putString(Constant.VENDOR_NAME,vendor.getNickName());
         PreferenceHelper.putString(Constant.VENDOR_EMAIL,vendor.getEmail());
         PreferenceHelper.putString(Constant.VENDOR_IMAGE,vendor.getImageUrl());
-        int vendorId= PreferenceHelper.getInt(Constant.VENDOR_ID,0);
-        Logger.debugLog("LOGIN_RESPONSE","onLoginSuccess>>>vendorId:"+vendorId);
-        new ProductIdController().getProductIdList(vendor.getUserName(),vendor.getPassword(),this);
+        startActivity(new Intent(this,HomeActivity.class));
+        LoginActivity.this.finish();
 
     }
 
@@ -103,18 +102,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onLoginFailed() {
         progressBar.setVisibility(View.INVISIBLE);
         Toast.makeText(this, R.string.faile_login,Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSuccessList(ArrayList<Integer> productId) {
-        Logger.debugLog("APP","onSuccessList>>>>productId:"+productId);
-        App.setProductIdList(productId);
-        startActivity(new Intent(this,HomeActivity.class));
-        LoginActivity.this.finish();
-    }
-
-    @Override
-    public void onFailed() {
-
     }
 }

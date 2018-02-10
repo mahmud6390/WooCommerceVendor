@@ -7,12 +7,15 @@ import com.mykaribe.vendor.listener.IProductIdListCallback;
 import com.mykaribe.vendor.listener.InputParam;
 import com.mykaribe.vendor.model.RequestModel;
 import com.mykaribe.vendor.utils.Constant;
+import com.mykaribe.vendor.utils.Logger;
 import com.mykaribe.vendor.utils.MethodType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -22,10 +25,15 @@ public class ProductIdController implements IServerRequestCallback,InputParam {
     private IProductIdListCallback uiCallback;
     public void getProductIdList(String userName,String password,IProductIdListCallback uiCallback){
         this.uiCallback=uiCallback;
-        String url= Constant.GET_PRODUCT_FETCH_URL+"username="+userName+"&password="+password;
-        RequestModel requestModel=new RequestModel(url,this, MethodType.GET.toString(),Constant.ORDER_TYPE_PRODUCT);
-        requestModel.setNoAuth(true);
-        ServerRequester.getInstance().processUrl(requestModel);
+        try {
+            String url=Constant.GET_PRODUCT_FETCH_URL+"username="+ URLEncoder.encode(userName,"UTF-8")+"&password="+URLEncoder.encode(password,"UTF-8");
+            Logger.debugLog("ProductIdController","URLEncoder>>>"+url);
+            RequestModel requestModel=new RequestModel(url,this, MethodType.GET.toString(),Constant.ORDER_TYPE_PRODUCT);
+            requestModel.setNoAuth(true);
+            ServerRequester.getInstance().processUrl(requestModel);
+        } catch (UnsupportedEncodingException e) {
+            uiCallback.onFailed();
+        }
     }
     @Override
     public void onRequestSuccess(String response, int orderType) {

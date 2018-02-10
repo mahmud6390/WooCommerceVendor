@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,10 +29,18 @@ public class LoginController implements IServerRequestCallback,InputParam {
         this.uiCallback=uiCallback;
         this.userName=userName;
         this.password=password;
-        String url=Constant.LOGIN_URL+"username="+userName+"&password="+password;
-        RequestModel requestModel=new RequestModel(url,this, MethodType.GET.toString(),Constant.ORDER_TYPE_LOGIN);
-        requestModel.setNoAuth(true);
-        ServerRequester.getInstance().processUrl(requestModel);
+
+        try {
+            String url=Constant.LOGIN_URL+"username="+URLEncoder.encode(userName,"UTF-8")+"&password="+URLEncoder.encode(password,"UTF-8");
+            Logger.debugLog("LoginController","URLEncoder>>>"+url);
+            RequestModel requestModel=new RequestModel(url,this, MethodType.GET.toString(),Constant.ORDER_TYPE_LOGIN);
+            requestModel.setNoAuth(true);
+            ServerRequester.getInstance().processUrl(requestModel);
+        } catch (UnsupportedEncodingException e) {
+            uiCallback.onLoginFailed();
+        }
+
+
     }
     @Override
     public void onRequestSuccess(String response, int orderType) {
