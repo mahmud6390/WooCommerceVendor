@@ -8,8 +8,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorAccent"
+        android:background="@color/black"
         app:navigationIcon="?attr/homeAsUpIndicator"
+        app:theme="@style/ToolbarStyle"
         >
 
     </android.support.v7.widget.Toolbar>

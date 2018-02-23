@@ -63,9 +63,10 @@ public class LoginController implements IServerRequestCallback,InputParam {
     private Vendor parseResponse(String response){
         Vendor vendor=null;
         try {
-           String jsonpart=response.substring(response.indexOf("{"),response.lastIndexOf("}")+1);
-            Logger.debugLog("LOGIN","parseResponse>>>jsonpart:"+jsonpart);
-            JSONObject jsonObject=new JSONObject(jsonpart);
+          // String jsonpart=response.substring(response.indexOf("{"),response.lastIndexOf("}")+1);
+           // Logger.debugLog("LOGIN","parseResponse>>>jsonpart:"+jsonpart);
+            JSONObject jsonObject=new JSONObject(response);
+            if(!jsonObject.has(status)){
             vendor=new Vendor();
             vendor.setId(jsonObject.optInt(vendor_id,0));
             vendor.setNickName(jsonObject.optString(name,""));
@@ -73,6 +74,8 @@ public class LoginController implements IServerRequestCallback,InputParam {
             vendor.setImageUrl(jsonObject.optString(vendor_image_url));
             vendor.setUserName(userName);
             vendor.setPassword(password);
+
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

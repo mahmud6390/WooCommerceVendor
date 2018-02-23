@@ -9,7 +9,9 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowActionBarOverlay">true</item>
     </style>
-
+    <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/colorPrimary</item>
+    </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

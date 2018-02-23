@@ -149,6 +149,9 @@ public class ServerRequester {
                     return responseString.toString();
                 } else {
                     Logger.debugLog(TAG, " Failed ");
+                    // get redirect url from "location" header field
+                    //String newUrl = urlConnection.getHeaderField("Location");
+                    //Logger.debugLog(TAG, " newUrl: "+newUrl);
                     return "";
 
                 }
