@@ -19,10 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
-import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
-import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -31,7 +27,6 @@ import com.bumptech.glide.request.target.ViewTarget;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.mykaribe.vendor.R;
-import com.mykaribe.vendor.communication.PushListenerService;
 import com.mykaribe.vendor.utils.App;
 import com.mykaribe.vendor.utils.Constant;
 import com.mykaribe.vendor.utils.Logger;
@@ -70,7 +65,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setNavigationView();
         setProfileImage(PreferenceHelper.getString(Constant.VENDOR_IMAGE,""));
         setHomePageFragment();
-        setUpAmazonService();
 
     }
     private void setNavigationView(){
@@ -108,66 +102,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         toolbar.setTitle(R.string.home_page);
         getFragmentManager().beginTransaction().replace(R.id.content_view,new HomeFragment()).commit();
     }
-    public static PinpointManager pinpointManager;
-    private void setUpAmazonService(){
-        AWSMobileClient.getInstance().initialize(this).execute();
-        if (pinpointManager == null) {
-            PinpointConfiguration pinpointConfig = new PinpointConfiguration(
-                    getApplicationContext(),
-                    AWSMobileClient.getInstance().getCredentialsProvider(),
-                    AWSMobileClient.getInstance().getConfiguration());
 
-            pinpointManager = new PinpointManager(pinpointConfig);
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        String deviceToken =
-                                InstanceID.getInstance(HomeActivity.this).getToken(
-                                        Constant.FIREBASE_SENDER_ID,
-                                        GoogleCloudMessaging.INSTANCE_ID_SCOPE);
-                        Logger.debugLog("DEVICE_TOKEN","device token:"+ deviceToken);
-                        pinpointManager.getNotificationClient()
-                                .registerGCMDeviceToken(deviceToken);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-        }
-    }
     protected void onPause() {
         super.onPause();
 
         // unregister notification receiver
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(notificationReceiver);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        // register notification receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(notificationReceiver,
-                new IntentFilter(PushListenerService.ACTION_PUSH_NOTIFICATION));
     }
-
-    private final BroadcastReceiver notificationReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Logger.debugLog("notificationReceiver", "Received notification from local broadcast. Display it in a dialog.");
-
-            Bundle data = intent.getBundleExtra(PushListenerService.INTENT_SNS_NOTIFICATION_DATA);
-            String message = PushListenerService.getMessage(data);
-
-            new AlertDialog.Builder(HomeActivity.this)
-                    .setTitle("Push notification")
-                    .setMessage(message)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
-        }
-    };
 
 
     @Override

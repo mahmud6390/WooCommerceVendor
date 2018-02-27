@@ -9,12 +9,17 @@ android {
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles 'proguard-android.txt'
         }
     }
     useLibrary 'org.apache.http.legacy'
@@ -30,9 +35,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'me.dm7.barcodescanner:zxing:1.8.4'
     compile 'com.google.code.gson:gson:2.4'
-    compile 'com.amazonaws:aws-android-sdk-pinpoint:2.6.+'
-    compile ('com.amazonaws:aws-android-sdk-auth-core:2.6.+@aar')  {transitive = true;}
-    compile ('com.amazonaws:aws-android-sdk-mobile-client:2.6.7@aar') { transitive = true; }
     compile 'com.google.firebase:firebase-messaging:11.6.0'
     compile 'com.google.android.gms:play-services-iid:11.6.0'
     compile 'com.google.android.gms:play-services-gcm:11.6.0'
